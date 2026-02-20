@@ -15,3 +15,7 @@ Within CLIPS run the following commands:
 ## Features 
 
 For now the system prints the recommendations to the console. The system only prints out allowed exercises based on the user's input but does not provide any recommendations or routines.
+
+## GitHub Link
+
+https://github.com/Pruthvirajsinh-Dodiya/Comp-474
