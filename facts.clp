@@ -54,5 +54,8 @@
    (exercise (name barbell-push-press) (target shoulders) (equipment barbell) (difficulty advanced))
    (exercise (name barbell-romanian-deadlift) (target hamstrings) (equipment barbell) (difficulty advanced)))
 
+(deftemplate ui-state 
+   (slot phase (type SYMBOL) (default startup))) ;; defines a state for the system: startup, processing, or completed
+
 (deffacts system-initialization ;; defines initial state of the system
    (ui-state (phase startup)))  ;; puts system in startup phase

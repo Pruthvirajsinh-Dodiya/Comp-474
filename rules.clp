@@ -42,19 +42,18 @@
 (defrule setup-intermediate
    (user-profile (experience intermediate))
    =>
-   (assert (routine-parameters (frequency "3-4") (sets "Multiple") (reps "6-12"))))
+   (assert (routine-parameters (frequency "3-4") (routine-type full-body) (sets "Multiple") (reps "6-12"))))
 
 ;; sets and reps for advanced
 (defrule setup-advanced
    (user-profile (experience advanced))
    =>
-   (assert (routine-parameters (frequency "4-5") (sets "3-5") (reps "1-6"))))
+   (assert (routine-parameters (frequency "4-5") (routine-type full-body) (sets "3-5") (reps "1-6"))))
 
 ;; rest period for heavy loading
 (defrule rest-heavy-advanced
    (user-profile (experience advanced))
-   (routine-parameters (reps "1-6"))
-   ?rp <- (routine-parameters (rest-period nil))
+   ?rp <- (routine-parameters (reps "1-6") (rest-period ""))
    =>
    (modify ?rp (rest-period "3-5 minutes")))
 
