@@ -1,21 +1,31 @@
-# Comp-474
+# Workout Planner Expert System (D2)
 
-## Project Description
+This is a fresh CLIPS project built from scratch for a dynamic workout planning demo.
 
-This project is a CLIPS expert system that helps users create personalized workout routines based on their fitness goals, experience level, equipment availability, and injury status. The system uses a rule-based approach to recommend exercises and provides recommendations for different difficulty levels (beginner, intermediate, advanced).
+## Files
+- `facts.clp` — exercise knowledge base
+- `rules.clp` — planner logic and printing functions
+- `run.bat` — CLIPS batch script to launch the planner
 
-## Running
+## How to run in CLIPSIDE
+1. Extract the folder to a simple location, for example `C:/clips-project/`
+2. Open CLIPSIDE
+3. Run:
+   ```clips
+   (clear)
+   (chdir "C:/clips-project/")
+   (batch "run.bat")
+   ```
 
-Within CLIPS run the following commands:
+The system will then ask for:
+- intensity
+- days per week
+- equipment level
+- injury area
+- injury severity
+- recovery score
 
-```bash
-(batch "run.bat")
-```
-
-## Features 
-
-For now the system prints the recommendations to the console. The system only prints out allowed exercises based on the user's input but does not provide any recommendations or routines.
-
-## GitHub Link
-
-https://github.com/Pruthvirajsinh-Dodiya/Comp-474
+## Notes
+- This version starts directly with `(start-planner)` from the batch file.
+- It does not depend on rule-engine phase transitions.
+- It prints a structured plan every time after all inputs are entered.
