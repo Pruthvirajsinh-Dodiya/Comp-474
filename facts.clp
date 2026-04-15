@@ -1,61 +1,152 @@
-
-
 (deftemplate exercise
-   (slot name (type SYMBOL))
-   (slot target (type SYMBOL))
-   (slot equipment (type SYMBOL))
-   (slot difficulty (type SYMBOL))
-   (slot joint-type (type SYMBOL) (default multi))) ; multi vs single
-
-(deftemplate user-profile
-   (slot experience (type SYMBOL))           ; beginner, intermediate, advanced
-   (slot available-equipment (type SYMBOL))  ; none, machine-only, full-gym
-   (slot injury-status (type SYMBOL) (default none))
-   (slot age-category (type SYMBOL) (default adult))
-   (slot goal (type SYMBOL) (default general)))
-
-(deftemplate routine-parameters
-   (slot frequency (type STRING))
-   (slot routine-type (type SYMBOL))
-   (slot sets (type STRING))
-   (slot reps (type STRING))
-   (slot rest-period (type STRING)))
-
-(deftemplate recommendation
-   (slot exercise-name (type SYMBOL))
-   (slot status (type SYMBOL) (default included))) ; included or excluded
+   (slot name)
+   (slot target)
+   (slot equipment)
+   (slot difficulty)
+   (slot style)
+   (slot shoulder-risk)
+   (slot back-risk)
+   (slot knee-risk)
+   (slot alternative))
 
 (deffacts exercise-library
-;; beginner machine exercises
-   (exercise (name leg-press) (target quads) (equipment machine) (difficulty beginner))
-   (exercise (name machine-chest-press) (target chest) (equipment machine) (difficulty beginner))
-   (exercise (name lat-pulldown) (target back) (equipment machine) (difficulty beginner))
-   (exercise (name seated-leg-curl) (target hamstrings) (equipment machine) (difficulty beginner))
-   (exercise (name machine-shoulder-press) (target shoulders) (equipment machine) (difficulty beginner))
-   (exercise (name abdominal-crunch-machine) (target core) (equipment machine) (difficulty beginner))
-   (exercise (name seated-cable-row) (target back) (equipment machine) (difficulty beginner))
+   ; chest
+   (exercise (name push-up) (target chest) (equipment none) (difficulty beginner) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Use incline push-up if needed."))
+   (exercise (name incline-push-up) (target chest) (equipment none) (difficulty beginner) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Easy no-equipment chest option."))
+   (exercise (name machine-chest-press) (target chest) (equipment machine) (difficulty beginner) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use push-up."))
+   (exercise (name dumbbell-bench-press) (target chest) (equipment dumbbell) (difficulty intermediate) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use push-up."))
+   (exercise (name barbell-bench-press) (target chest) (equipment barbell) (difficulty advanced) (style compound)
+             (shoulder-risk yes) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use push-up."))
 
-;; beginner bodyweight exercises
-   (exercise (name push-up) (target chest) (equipment none) (difficulty beginner))
-   (exercise (name goblet-squat) (target quads) (equipment dumbbell) (difficulty beginner))
+   ; shoulders
+   (exercise (name wall-slide) (target shoulders) (equipment none) (difficulty beginner) (style stability)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Shoulder-friendly option."))
+   (exercise (name pike-push-up) (target shoulders) (equipment none) (difficulty intermediate) (style compound)
+             (shoulder-risk yes) (back-risk no) (knee-risk no)
+             (alternative "If shoulder is sensitive, use wall-slide."))
+   (exercise (name machine-shoulder-press) (target shoulders) (equipment machine) (difficulty beginner) (style compound)
+             (shoulder-risk yes) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use wall-slide."))
+   (exercise (name dumbbell-shoulder-press) (target shoulders) (equipment dumbbell) (difficulty intermediate) (style compound)
+             (shoulder-risk yes) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use wall-slide."))
 
-;; intermediate exercises
-   (exercise (name barbell-bench-press) (target chest) (equipment barbell) (difficulty intermediate))
-   (exercise (name upright-row) (target shoulders) (equipment barbell) (difficulty intermediate) (joint-type single))
-   (exercise (name pull-up) (target back) (equipment none) (difficulty intermediate))
-   (exercise (name bench-dip) (target triceps) (equipment none) (difficulty intermediate) (joint-type single))
-   (exercise (name standing-toe-touch) (target hamstrings) (equipment none) (difficulty intermediate))
-   (exercise (name pike-push-up) (target shoulders) (equipment none) (difficulty intermediate))
-   
-;; advanced exercises
-   (exercise (name barbell-back-squat) (target quads) (equipment barbell) (difficulty advanced))
-   (exercise (name barbell-power-clean) (target full-body) (equipment barbell) (difficulty advanced))
-   (exercise (name lat-pulldown-behind-neck) (target back) (equipment machine) (difficulty advanced))
-   (exercise (name barbell-push-press) (target shoulders) (equipment barbell) (difficulty advanced))
-   (exercise (name barbell-romanian-deadlift) (target hamstrings) (equipment barbell) (difficulty advanced)))
+   ; triceps
+   (exercise (name close-grip-push-up) (target triceps) (equipment none) (difficulty intermediate) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Bodyweight triceps option."))
+   (exercise (name bench-dip) (target triceps) (equipment none) (difficulty intermediate) (style compound)
+             (shoulder-risk yes) (back-risk no) (knee-risk no)
+             (alternative "If shoulder is sensitive, use close-grip push-up."))
+   (exercise (name cable-triceps-pushdown) (target triceps) (equipment machine) (difficulty beginner) (style isolation)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use close-grip push-up."))
+   (exercise (name overhead-triceps-extension) (target triceps) (equipment dumbbell) (difficulty intermediate) (style isolation)
+             (shoulder-risk yes) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use close-grip push-up."))
 
-(deftemplate ui-state 
-   (slot phase (type SYMBOL) (default startup))) ;; defines a state for the system: startup, processing, or completed
+   ; back
+   (exercise (name bird-dog-row) (target back) (equipment none) (difficulty beginner) (style stability)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Bodyweight back activation option."))
+   (exercise (name inverted-row) (target back) (equipment none) (difficulty intermediate) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "If setup is unavailable, use bird-dog-row."))
+   (exercise (name seated-cable-row) (target back) (equipment machine) (difficulty beginner) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use bird-dog-row."))
+   (exercise (name lat-pulldown) (target back) (equipment machine) (difficulty beginner) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use inverted-row if possible."))
+   (exercise (name one-arm-dumbbell-row) (target back) (equipment dumbbell) (difficulty intermediate) (style compound)
+             (shoulder-risk no) (back-risk yes) (knee-risk no)
+             (alternative "Without equipment, use bird-dog-row."))
+   (exercise (name barbell-row) (target back) (equipment barbell) (difficulty advanced) (style compound)
+             (shoulder-risk no) (back-risk yes) (knee-risk no)
+             (alternative "Without equipment, use bird-dog-row."))
 
-(deffacts system-initialization ;; defines initial state of the system
-   (ui-state (phase startup)))  ;; puts system in startup phase
+   ; biceps
+   (exercise (name towel-curl-isometric) (target biceps) (equipment none) (difficulty beginner) (style stability)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "No-equipment biceps option."))
+   (exercise (name cable-curl) (target biceps) (equipment machine) (difficulty beginner) (style isolation)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use towel-curl-isometric."))
+   (exercise (name dumbbell-curl) (target biceps) (equipment dumbbell) (difficulty beginner) (style isolation)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use towel-curl-isometric."))
+
+   ; quads
+   (exercise (name bodyweight-squat) (target quads) (equipment none) (difficulty beginner) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk yes)
+             (alternative "Reduce depth if knee is sensitive."))
+   (exercise (name split-squat) (target quads) (equipment none) (difficulty intermediate) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk yes)
+             (alternative "Use shorter range if knee is sensitive."))
+   (exercise (name leg-press) (target quads) (equipment machine) (difficulty beginner) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk yes)
+             (alternative "Without equipment, use bodyweight-squat."))
+   (exercise (name goblet-squat) (target quads) (equipment dumbbell) (difficulty beginner) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk yes)
+             (alternative "Without equipment, use bodyweight-squat."))
+   (exercise (name barbell-back-squat) (target quads) (equipment barbell) (difficulty advanced) (style compound)
+             (shoulder-risk no) (back-risk yes) (knee-risk yes)
+             (alternative "Without equipment, use bodyweight-squat."))
+
+   ; hamstrings
+   (exercise (name glute-bridge) (target hamstrings) (equipment none) (difficulty beginner) (style stability)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Good no-equipment posterior chain option."))
+   (exercise (name hamstring-walkout) (target hamstrings) (equipment none) (difficulty intermediate) (style stability)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "No-equipment posterior chain option."))
+   (exercise (name seated-leg-curl) (target hamstrings) (equipment machine) (difficulty beginner) (style isolation)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use glute-bridge."))
+   (exercise (name dumbbell-romanian-deadlift) (target hamstrings) (equipment dumbbell) (difficulty intermediate) (style compound)
+             (shoulder-risk no) (back-risk yes) (knee-risk no)
+             (alternative "Without equipment, use glute-bridge."))
+   (exercise (name barbell-romanian-deadlift) (target hamstrings) (equipment barbell) (difficulty advanced) (style compound)
+             (shoulder-risk no) (back-risk yes) (knee-risk no)
+             (alternative "Without equipment, use glute-bridge."))
+
+   ; glutes
+   (exercise (name glute-bridge-march) (target glutes) (equipment none) (difficulty beginner) (style stability)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "No-equipment glute option."))
+   (exercise (name hip-thrust-machine) (target glutes) (equipment machine) (difficulty beginner) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use glute-bridge-march."))
+   (exercise (name dumbbell-hip-thrust) (target glutes) (equipment dumbbell) (difficulty beginner) (style compound)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use glute-bridge-march."))
+
+   ; calves
+   (exercise (name standing-calf-raise) (target calves) (equipment none) (difficulty beginner) (style isolation)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "No-equipment calf option."))
+   (exercise (name seated-calf-raise) (target calves) (equipment machine) (difficulty beginner) (style isolation)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use standing-calf-raise."))
+
+   ; core
+   (exercise (name plank) (target core) (equipment none) (difficulty beginner) (style stability)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Foundational core movement."))
+   (exercise (name dead-bug) (target core) (equipment none) (difficulty beginner) (style stability)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Back-friendly core option."))
+   (exercise (name cable-crunch) (target core) (equipment machine) (difficulty intermediate) (style isolation)
+             (shoulder-risk no) (back-risk no) (knee-risk no)
+             (alternative "Without equipment, use plank."))
+)
