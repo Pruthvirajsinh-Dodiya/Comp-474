@@ -1,7 +1,4 @@
-(clear)
 (load "facts.clp")
 (load "rules.clp")
 (reset)
-(watch rules)
-(watch facts)
-(run)
+(start-planner)
